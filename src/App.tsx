@@ -320,35 +320,6 @@ function App() {
           </div>
         </div>
 
-        <div>
-          <h3 className="text-2xl font-semibold mb-8 text-blue-400">Founding Team</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <TeamMember
-              name="Karthiyayini J"
-              role="CPO & Business Excellence and CX"
-              description="Certified Training & Development Professional with 15+ years of experience in process excellence, quality monitoring, and customer experience strategy."
-              index={4}
-            />
-            <TeamMember
-              name="Pradeep Rajendran"
-              role="Head of Planning Infrastructure"
-              description="Strategic leader with 20+ years in customer experience, specializing in AI-powered solutions and operational excellence. Expert in WFM, analytics, and global BPO vendor management."
-              index={5}
-            />
-            <TeamMember
-              name="Macrin Smith"
-              role="Head of Product"
-              description="Product strategist with 9 years of expertise in enterprise solutions and customer experience. Proven success in digital transformation and innovative product development."
-              index={6}
-            />
-            <TeamMember
-              name="Saravana Pakkiri"
-              role="Head of Operations"
-              description="Seasoned operational leader specializing in team management, strategic planning, and customer experience enhancement. Expert in conversational AI implementation."
-              index={7}
-            />
-          </div>
-        </div>
       </section>
 
       <section id="contact" className="container mx-auto px-6 py-24">
