@@ -20,8 +20,30 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically handle the form submission
-    console.log('Form submitted:', formData);
+    
+    // Create email body with form data
+    const emailBody = `
+New Legal Business Inquiry:
+
+Name: ${formData.name}
+Email: ${formData.email}
+City: ${formData.city}
+State: ${formData.state}
+Practice Type: ${formData.practiceType}
+${formData.practiceType === 'Law Firm' ? `Law Firm Name: ${formData.lawFirmName}` : ''}
+
+Message:
+${formData.message}
+    `.trim();
+
+    // Create mailto link
+    const mailtoLink = `mailto:support@octigenie.com?subject=Legal Business Inquiry from ${formData.name}&body=${encodeURIComponent(emailBody)}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
+    // Show success message and close modal
+    alert('Thank you for your inquiry! Your email client should open with the pre-filled message. Please send the email to complete your submission.');
     onClose();
   };
 
@@ -200,9 +222,10 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                 <button
                   type="submit"
                   className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800
-                    py-3 rounded-lg font-semibold flex items-center justify-center gap-2 group transition-all"
+                    py-3 rounded-lg font-semibold flex items-center justify-center gap-2 group transition-all
+                    hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98]"
                 >
-                  <span>Send Message</span>
+                  <span>Send Inquiry</span>
                   <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </form>
