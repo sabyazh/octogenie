@@ -11,7 +11,10 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
   const [formData, setFormData] = React.useState({
     name: '',
     email: '',
-    company: '',
+    city: '',
+    state: '',
+    practiceType: '',
+    lawFirmName: '',
     message: ''
   });
 
@@ -97,19 +100,86 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2" htmlFor="company">
-                    Company
+                  <label className="block text-sm font-medium mb-2" htmlFor="city">
+                    City
                   </label>
                   <input
                     type="text"
-                    id="company"
-                    name="company"
-                    value={formData.company}
+                    id="city"
+                    name="city"
+                    value={formData.city}
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-blue-500
                       focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
+                    required
                   />
                 </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2" htmlFor="state">
+                    State
+                  </label>
+                  <input
+                    type="text"
+                    id="state"
+                    name="state"
+                    value={formData.state}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-blue-500
+                      focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Practice Type
+                  </label>
+                  <div className="space-y-3">
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="practiceType"
+                        value="Individual Lawyer"
+                        checked={formData.practiceType === 'Individual Lawyer'}
+                        onChange={handleChange}
+                        className="mr-3 text-blue-500 focus:ring-blue-500/20"
+                        required
+                      />
+                      <span className="text-sm">Individual Lawyer</span>
+                    </label>
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="practiceType"
+                        value="Law Firm"
+                        checked={formData.practiceType === 'Law Firm'}
+                        onChange={handleChange}
+                        className="mr-3 text-blue-500 focus:ring-blue-500/20"
+                        required
+                      />
+                      <span className="text-sm">Law Firm</span>
+                    </label>
+                  </div>
+                </div>
+
+                {formData.practiceType === 'Law Firm' && (
+                  <div>
+                    <label className="block text-sm font-medium mb-2" htmlFor="lawFirmName">
+                      Name of the Law Firm
+                    </label>
+                    <input
+                      type="text"
+                      id="lawFirmName"
+                      name="lawFirmName"
+                      value={formData.lawFirmName}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-blue-500
+                        focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
+                      required
+                    />
+                  </div>
+                )}
 
                 <div>
                   <label className="block text-sm font-medium mb-2" htmlFor="message">
