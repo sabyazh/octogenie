@@ -151,8 +151,11 @@ function App() {
           >
             Industries We Transform
           </motion.h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
+          <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base mb-4">
             Leveraging cutting-edge AI technology to revolutionize operations across diverse sectors
+          </p>
+          <p className="text-blue-400 max-w-3xl mx-auto text-sm sm:text-base font-medium">
+            Our current focus is to transform the fragmented and manual legal industry into a data-driven, intelligent, and highly efficient ecosystem.
           </p>
         </div>
 
