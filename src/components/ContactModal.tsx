@@ -61,7 +61,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                 <X className="w-5 h-5 text-gray-300 hover:text-white transition-colors" />
               </button>
 
-              <h2 className="text-2xl font-bold mb-6">Let's Transform Your Business</h2>
+              <h2 className="text-2xl font-bold mb-6">Let's Transform Your Legal Business</h2>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
