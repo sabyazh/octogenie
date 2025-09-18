@@ -292,30 +292,12 @@ function App() {
 
         <div className="mb-20">
           <h3 className="text-2xl font-semibold mb-8 text-blue-400">Leadership Team</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 perspective-1000">
+          <div className="flex justify-center perspective-1000">
             <TeamMember
               name="Nanda Gopal V"
               role="Founder and CEO"
               description="A visionary e-commerce leader with 27 years of global experience and a Master's in English Literature. Transformed from Customer Service Executive to CEO, consistently championing customer-first approaches."
               index={0}
-            />
-            <TeamMember
-              name="Prabakaran Kannan"
-              role="Co-Founder and CTO"
-              description="Technology innovator with two decades of engineering leadership, specializing in Generative AI, distributed systems, and quantum AI development. Proven track record in leveraging emerging technologies."
-              index={1}
-            />
-            <TeamMember
-              name="Ashwin Kumar"
-              role="Co-Founder and CFO"
-              description="IIM Ahmedabad alumnus with 13 years of expertise in Strategy, Business Finance, and Performance Management. Demonstrated leadership in both CEO's and CFO's offices."
-              index={2}
-            />
-            <TeamMember
-              name="A M Iktear Uddin"
-              role="Co-Founder and CLO"
-              description="Distinguished legal professional with 17+ years of expertise in corporate law and compliance. Bangalore University LL.M graduate (2nd rank), Special Public Prosecutor, and Karnataka Business Samrat awardee."
-              index={3}
             />
           </div>
         </div>
