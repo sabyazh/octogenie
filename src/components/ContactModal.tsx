@@ -37,7 +37,7 @@ ${formData.message}
     `.trim();
 
     // Create mailto link
-    const mailtoLink = `mailto:support@octigenie.com?subject=Legal Business Inquiry from ${formData.name}&body=${encodeURIComponent(emailBody)}`;
+    const mailtoLink = `mailto:support@octogenie.com?subject=Legal Business Inquiry from ${formData.name}&body=${encodeURIComponent(emailBody)}`;
     
     // Open email client
     window.location.href = mailtoLink;

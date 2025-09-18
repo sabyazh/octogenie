@@ -361,7 +361,7 @@ function App() {
               </address>
               <div>
                 <a 
-                  href="mailto:support@octigenie.com"
+                  href="mailto:support@octogenie.com"
                   className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-blue-400 
                     transition-colors group"
                 >
@@ -370,7 +370,7 @@ function App() {
                     transition-colors">
                     <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                   </div>
-                  support@octigenie.com
+                  support@octogenie.com
                 </a>
               </div>
             </div>
@@ -429,7 +429,7 @@ function App() {
                 </li>
                 <li>
                   <a 
-                    href="mailto:support@octigenie.com?subject=Career%20Inquiry"
+                    href="mailto:support@octogenie.com?subject=Career%20Inquiry"
                     className="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2"
                   >
                     <div className="w-1 h-1 rounded-full bg-gray-600" />
@@ -452,7 +452,7 @@ function App() {
               <ul className="space-y-3 text-sm">
                 <li>
                   <a 
-                    href="mailto:support@octigenie.com"
+                    href="mailto:support@octogenie.com"
                     className="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2 group"
                   >
                     <div className="w-5 h-5 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 
