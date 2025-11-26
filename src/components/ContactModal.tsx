@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send } from 'lucide-react';
+import { X, Send, Loader2 } from 'lucide-react';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -17,34 +19,53 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
     lawFirmName: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [submitStatus, setSubmitStatus] = React.useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Create email body with form data
-    const emailBody = `
-New Legal Business Inquiry:
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
 
-Name: ${formData.name}
-Email: ${formData.email}
-City: ${formData.city}
-State: ${formData.state}
-Practice Type: ${formData.practiceType}
-${formData.practiceType === 'Law Firm' ? `Law Firm Name: ${formData.lawFirmName}` : ''}
+    try {
+      // Save to Firebase Firestore
+      await addDoc(collection(db, 'leads'), {
+        name: formData.name,
+        email: formData.email,
+        city: formData.city,
+        state: formData.state,
+        practiceType: formData.practiceType,
+        lawFirmName: formData.practiceType === 'Law Firm' ? formData.lawFirmName : '',
+        message: formData.message,
+        createdAt: serverTimestamp(),
+        source: 'octogenie-website'
+      });
 
-Message:
-${formData.message}
-    `.trim();
+      setSubmitStatus('success');
 
-    // Create mailto link
-    const mailtoLink = `mailto:support@octogenie.com?subject=Legal Business Inquiry from ${formData.name}&body=${encodeURIComponent(emailBody)}`;
-    
-    // Open email client
-    window.location.href = mailtoLink;
-    
-    // Show success message and close modal
-    alert('Thank you for your inquiry! Your email client should open with the pre-filled message. Please send the email to complete your submission.');
-    onClose();
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        city: '',
+        state: '',
+        practiceType: '',
+        lawFirmName: '',
+        message: ''
+      });
+
+      // Close modal after a short delay
+      setTimeout(() => {
+        onClose();
+        setSubmitStatus('idle');
+      }, 2000);
+
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -219,14 +240,36 @@ ${formData.message}
                   />
                 </div>
 
+                {submitStatus === 'success' && (
+                  <div className="p-4 rounded-lg bg-green-500/20 border border-green-500/30 text-green-400 text-center">
+                    Thank you! Your inquiry has been submitted successfully.
+                  </div>
+                )}
+
+                {submitStatus === 'error' && (
+                  <div className="p-4 rounded-lg bg-red-500/20 border border-red-500/30 text-red-400 text-center">
+                    Something went wrong. Please try again.
+                  </div>
+                )}
+
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800
                     py-3 rounded-lg font-semibold flex items-center justify-center gap-2 group transition-all
-                    hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98]"
+                    hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span>Send Inquiry</span>
-                  <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Submitting...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Send Inquiry</span>
+                      <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </>
+                  )}
                 </button>
               </form>
 
