@@ -383,9 +383,9 @@ function App() {
               </address>
               <div>
                 <a 
-                  href="mailto:support@octogenie.com"
+                  onClick={() => setIsContactModalOpen(true)}
                   className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-blue-400 
-                    transition-colors group"
+                    transition-colors group cursor-pointer"
                 >
                   <div className="w-5 h-5 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 
                     flex items-center justify-center border border-white/10 group-hover:border-blue-500/30 
@@ -451,8 +451,8 @@ function App() {
                 </li>
                 <li>
                   <a 
-                    href="mailto:support@octogenie.com?subject=Career%20Inquiry"
-                    className="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2"
+                    onClick={() => setIsContactModalOpen(true)}
+                    className="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2 cursor-pointer"
                   >
                     <div className="w-1 h-1 rounded-full bg-gray-600" />
                     Careers
@@ -501,8 +501,8 @@ function App() {
               <ul className="space-y-3 text-sm">
                 <li>
                   <a 
-                    href="mailto:support@octogenie.com"
-                    className="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2 group"
+                    onClick={() => setIsContactModalOpen(true)}
+                    className="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2 group cursor-pointer"
                   >
                     <div className="w-5 h-5 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 
                       flex items-center justify-center border border-white/10 group-hover:border-blue-500/30 

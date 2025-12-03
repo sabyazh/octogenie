@@ -24,12 +24,14 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
+    
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
     try {
       // Save to Firebase Firestore
-      await addDoc(collection(db, 'leads'), {
+      const docRef = await addDoc(collection(db, 'leads'), {
         name: formData.name,
         email: formData.email,
         city: formData.city,
@@ -41,6 +43,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
         source: 'octogenie-website'
       });
 
+      console.log('Document written with ID: ', docRef.id);
       setSubmitStatus('success');
 
       // Reset form
@@ -68,11 +71,18 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
     }));
+  };
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    handleSubmit(e);
+    return false;
   };
 
   return (
@@ -109,10 +119,10 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
 
               <h2 className="text-2xl font-bold mb-6">Let's Transform Your Legal Business</h2>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleFormSubmit} className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium mb-2" htmlFor="name">
-                    Name
+                    Name *
                   </label>
                   <input
                     type="text"
@@ -128,7 +138,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
 
                 <div>
                   <label className="block text-sm font-medium mb-2" htmlFor="email">
-                    Email
+                    Email *
                   </label>
                   <input
                     type="email"
@@ -144,7 +154,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
 
                 <div>
                   <label className="block text-sm font-medium mb-2" htmlFor="city">
-                    City
+                    City *
                   </label>
                   <input
                     type="text"
@@ -160,7 +170,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
 
                 <div>
                   <label className="block text-sm font-medium mb-2" htmlFor="state">
-                    State
+                    State *
                   </label>
                   <input
                     type="text"
@@ -176,7 +186,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
 
                 <div>
                   <label className="block text-sm font-medium mb-2">
-                    Practice Type
+                    Practice Type *
                   </label>
                   <div className="space-y-3">
                     <label className="flex items-center">
@@ -209,7 +219,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                 {formData.practiceType === 'Law Firm' && (
                   <div>
                     <label className="block text-sm font-medium mb-2" htmlFor="lawFirmName">
-                      Name of the Law Firm
+                      Name of the Law Firm *
                     </label>
                     <input
                       type="text"
@@ -226,7 +236,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
 
                 <div>
                   <label className="block text-sm font-medium mb-2" htmlFor="message">
-                    Message
+                    Message *
                   </label>
                   <textarea
                     id="message"
@@ -242,13 +252,13 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
 
                 {submitStatus === 'success' && (
                   <div className="p-4 rounded-lg bg-green-500/20 border border-green-500/30 text-green-400 text-center">
-                    Thank you! Your inquiry has been submitted successfully.
+                    ✅ Thank you! Your inquiry has been submitted successfully. We'll get back to you soon!
                   </div>
                 )}
 
                 {submitStatus === 'error' && (
                   <div className="p-4 rounded-lg bg-red-500/20 border border-red-500/30 text-red-400 text-center">
-                    Something went wrong. Please try again.
+                    ❌ Something went wrong. Please try again or contact us directly.
                   </div>
                 )}
 
@@ -262,7 +272,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Submitting...</span>
+                      <span>Submitting to Database...</span>
                     </>
                   ) : (
                     <>
