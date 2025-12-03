@@ -5,11 +5,17 @@ import TeamMember from './components/TeamMember';
 import IndustryCard from './components/IndustryCard';
 import ApproachStep from './components/ApproachStep';
 import ContactModal from './components/ContactModal';
+import TermsOfService from './components/legal/TermsOfService';
+import PrivacyPolicy from './components/legal/PrivacyPolicy';
+import RefundPolicy from './components/legal/RefundPolicy';
 import { motion, useAnimationControls, useScroll, useTransform } from 'framer-motion';
+
+type PageType = 'home' | 'terms' | 'privacy' | 'refund';
 
 function App() {
   const [rotation, setRotation] = React.useState(0);
   const [isContactModalOpen, setIsContactModalOpen] = React.useState(false);
+  const [currentPage, setCurrentPage] = React.useState<PageType>('home');
   const controls = useAnimationControls();
   const { scrollY } = useScroll();
   
@@ -69,12 +75,28 @@ function App() {
   }, []);
 
   const handleRotate = (direction: 'left' | 'right') => {
-    const newRotation = direction === 'left' 
+    const newRotation = direction === 'left'
       ? rotation - 60
       : rotation + 60;
-    
+
     setRotation(newRotation);
   };
+
+  const navigateToPage = (page: PageType) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Render legal pages
+  if (currentPage === 'terms') {
+    return <TermsOfService onBack={() => navigateToPage('home')} />;
+  }
+  if (currentPage === 'privacy') {
+    return <PrivacyPolicy onBack={() => navigateToPage('home')} />;
+  }
+  if (currentPage === 'refund') {
+    return <RefundPolicy onBack={() => navigateToPage('home')} />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
@@ -437,12 +459,39 @@ function App() {
                   </a>
                 </li>
                 <li>
-                  <a 
-                    onClick={() => scrollToSection('contact')} 
+                  <a
+                    onClick={() => scrollToSection('contact')}
                     className="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2 cursor-pointer"
                   >
                     <div className="w-1 h-1 rounded-full bg-gray-600" />
                     Contact
+                  </a>
+                </li>
+                <li>
+                  <a
+                    onClick={() => navigateToPage('terms')}
+                    className="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2 cursor-pointer"
+                  >
+                    <div className="w-1 h-1 rounded-full bg-gray-600" />
+                    Terms & Conditions
+                  </a>
+                </li>
+                <li>
+                  <a
+                    onClick={() => navigateToPage('privacy')}
+                    className="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2 cursor-pointer"
+                  >
+                    <div className="w-1 h-1 rounded-full bg-gray-600" />
+                    Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a
+                    onClick={() => navigateToPage('refund')}
+                    className="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2 cursor-pointer"
+                  >
+                    <div className="w-1 h-1 rounded-full bg-gray-600" />
+                    Refund Policy
                   </a>
                 </li>
               </ul>
